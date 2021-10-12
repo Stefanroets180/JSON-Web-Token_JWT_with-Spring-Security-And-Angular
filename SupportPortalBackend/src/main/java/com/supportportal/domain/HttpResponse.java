@@ -1,20 +1,35 @@
 package com.supportportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
+import java.util.Date;
+
 public class HttpResponse {
-    private int httpStatusCode; // example 200 rance successful,400 error on your part,500 server error
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy hh:mm:ss:a", timezone = "Africa/Johannesburg")
+    private Date timeStamp;
+    private int httpStatusCode; // 200, 201, 400, 500
     private HttpStatus httpStatus;
     private String reason;
-    private String messages;
+    private String message;
 
+    // Constructor never used. Can be (and should be) deleted
     public HttpResponse() {}
 
-    public HttpResponse(int httpStatusCode, HttpStatus httpStatus, String reason, String messages) {
+    public HttpResponse(int httpStatusCode, HttpStatus httpStatus, String reason, String message) {
+        this.timeStamp = new Date();
         this.httpStatusCode = httpStatusCode;
         this.httpStatus = httpStatus;
         this.reason = reason;
-        this.messages = messages;
+        this.message = message;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public int getHttpStatusCode() {
@@ -41,11 +56,11 @@ public class HttpResponse {
         this.reason = reason;
     }
 
-    public String getMessages() {
-        return messages;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessages(String messages) {
-        this.messages = messages;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
